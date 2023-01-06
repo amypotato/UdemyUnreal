@@ -24,5 +24,14 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere)
-	FVector MyVector = FVector(0,0,0);
+	FVector MoveVector = FVector(0.5, 0.5, 0);
+
+	UPROPERTY(EditAnywhere)
+	double distance = 100.0;
+
+	UPROPERTY(VisibleAnywhere)
+	double difference = 0.0;
+
+	UPROPERTY(VisibleAnywhere)
+	FVector InitialPosition = FVector();
 };
