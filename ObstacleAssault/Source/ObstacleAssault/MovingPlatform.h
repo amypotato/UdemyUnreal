@@ -34,4 +34,6 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 	FVector StartLocation = FVector();
+
+	FString ActorName;
 };
