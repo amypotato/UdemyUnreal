@@ -9,13 +9,14 @@ AMovingPlatform::AMovingPlatform()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	UE_LOG(LogTemp, Display, TEXT("Created A Moving Platform Instance"));
 }
 
 // Called when the game starts or when spawned
 void AMovingPlatform::BeginPlay()
 {
 	Super::BeginPlay();
-	InitialPosition = GetActorLocation();
+	StartLocation = GetActorLocation();
 }
 
 // Called every frame
@@ -24,17 +25,17 @@ void AMovingPlatform::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	FVector CurrentLocation = GetActorLocation();
 	// Add vector to that location
-	CurrentLocation = CurrentLocation + (MoveVector * DeltaTime);
+	CurrentLocation = CurrentLocation + (PlatformVelocity * DeltaTime);
 	// Set the location
 	SetActorLocation(CurrentLocation);
 	// Send platform back if gone too far
-	difference = FVector::Distance(CurrentLocation, InitialPosition);
+	DistanceMoved = FVector::Distance(StartLocation, CurrentLocation);
 
-	if (difference > distance){
-		MoveVector = -MoveVector;
-		FVector MoveDirection = MoveVector.GetSafeNormal();
-		InitialPosition = CurrentLocation + MoveDirection * distance;
-		SetActorLocation(InitialPosition);
+	if (DistanceMoved > MoveDistance){
+		FVector MoveDirection = PlatformVelocity.GetSafeNormal();
+		StartLocation = StartLocation + MoveDirection * MoveDistance;
+		SetActorLocation(StartLocation);
+		PlatformVelocity = -PlatformVelocity;
 	}
 }
 
