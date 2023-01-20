@@ -23,6 +23,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+private:
 	UPROPERTY(EditAnywhere)
 	FVector PlatformVelocity = FVector(300, 0, 0);
 
@@ -36,4 +37,9 @@ public:
 	FVector StartLocation = FVector();
 
 	FString ActorName;
+
+	void MovePlatform(float DeltaTime);
+	void RotatePlatform(float DeltaTime);
+	bool ShouldPlatformReturn() const;
+	float GetDistanceMoved() const;
 };
